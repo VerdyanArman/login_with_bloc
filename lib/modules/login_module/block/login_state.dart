@@ -4,23 +4,27 @@ class LoginState extends Equatable {
   final String? emailError;
   final String? passwordError;
   final bool canNavigate;
+  final String? passwordSecurity;
 
   const LoginState({
     this.emailError,
     this.passwordError,
     this.canNavigate = false,
+    this.passwordSecurity,
   });
 
   LoginState copyWith({
     String? emailError,
     String? passwordError,
     bool? canNavigate,
+    String? passwordSecurity,
   }) {
     if (canNavigate == true) {
-      return const LoginState(
+      return LoginState(
         emailError: null,
         passwordError: null,
         canNavigate: true,
+        passwordSecurity: passwordSecurity ?? this.passwordSecurity,
       );
     }
 
@@ -29,6 +33,7 @@ class LoginState extends Equatable {
         emailError: null,
         passwordError: passwordError ?? this.passwordError,
         canNavigate: canNavigate ?? this.canNavigate,
+        passwordSecurity: passwordSecurity ?? this.passwordSecurity,
       );
     }
 
@@ -36,6 +41,7 @@ class LoginState extends Equatable {
       return LoginState(
         emailError: emailError ?? this.emailError,
         passwordError: null,
+        passwordSecurity: passwordSecurity ?? this.passwordSecurity,
         canNavigate: canNavigate ?? this.canNavigate,
       );
     }
@@ -44,9 +50,15 @@ class LoginState extends Equatable {
       emailError: emailError ?? this.emailError,
       passwordError: passwordError ?? this.passwordError,
       canNavigate: canNavigate ?? this.canNavigate,
+      passwordSecurity: passwordSecurity ?? this.passwordSecurity,
     );
   }
 
   @override
-  List<Object?> get props => [emailError, passwordError, canNavigate];
+  List<Object?> get props => [
+        emailError,
+        passwordError,
+        canNavigate,
+        passwordSecurity,
+      ];
 }

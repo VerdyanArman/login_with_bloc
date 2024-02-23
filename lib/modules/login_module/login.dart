@@ -79,6 +79,10 @@ class LoginScreen extends StatelessWidget {
                         password = value;
                       },
                     ),
+                    if (state.passwordSecurity != null)
+                      Text(
+                        state.passwordSecurity!,
+                      ),
                     const SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

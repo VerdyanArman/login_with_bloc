@@ -16,14 +16,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final email = event.email;
     final password = event.password;
 
+    final numbers = RegExp(r'[0-9]');
+    final small = RegExp(r'[a-z]');
+    final big = RegExp(r'[A-Z]');
+    final symbols = RegExp(r'\W');
+
     if (email == null || email.isEmpty) {
       emitter(state.copyWith(emailError: 'Email is required'));
       return;
     }
 
-    final exp = RegExp(r'(\w+@+\w+\.+\w)');
+    final emailRegex = RegExp(r'(\w+@+\w+\.+\w)');
 
-    if (!exp.hasMatch(email)) {
+    if (!emailRegex.hasMatch(email)) {
       emitter(state.copyWith(emailError: 'Please write correct email'));
       return;
     }
@@ -39,6 +44,41 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emitter(state.copyWith(passwordError: 'Password is required'));
       return;
     }
+
+    //password validation
+
+    if (!numbers.hasMatch(password)) {
+      emitter(state.copyWith(
+        passwordError: 'Password required to have numbers',
+      ));
+      return;
+    }
+
+    if (!small.hasMatch(password)) {
+      emitter(state.copyWith(
+        passwordError: 'Password required to have small letter',
+      ));
+      return;
+    }
+
+    if (!big.hasMatch(password)) {
+      emitter(state.copyWith(
+        passwordError: 'Password required to have big letter',
+      ));
+      return;
+    }
+
+    if (password.length < 9) {
+      emitter(state.copyWith(passwordError: 'Weak Password'));
+      return;
+    }
+
+    if (password.length < 12 && !symbols.hasMatch(password)) {
+      emitter(state.copyWith(passwordError: 'Weak Password'));
+      return;
+    }
+
+    //Password Security
 
     if (!DB.checkPassword(email, password)) {
       emitter(state.copyWith(passwordError: 'Wrong Password'));
