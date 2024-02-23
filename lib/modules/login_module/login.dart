@@ -43,6 +43,10 @@ class LoginScreen extends StatelessWidget {
     String? password;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -59,9 +63,8 @@ class LoginScreen extends StatelessWidget {
               builder: (context, state) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Login'),
-                    const SizedBox(height: 15),
                     CustomTextField(
                       label: 'Email',
                       errorMessage: state.emailError,
@@ -81,7 +84,12 @@ class LoginScreen extends StatelessWidget {
                     ),
                     if (state.passwordSecurity != null)
                       Text(
-                        state.passwordSecurity!,
+                        ' ${state.passwordSecurity!} password',
+                        style: TextStyle(
+                          color: state.passwordSecurity == 'Strong'
+                              ? Colors.green
+                              : Colors.blueAccent,
+                        ),
                       ),
                     const SizedBox(height: 15),
                     Row(

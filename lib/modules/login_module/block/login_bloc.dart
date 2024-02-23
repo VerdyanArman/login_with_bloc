@@ -78,7 +78,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       return;
     }
 
+    emitter(state.copyWith(passwordError: ''));
+
     //Password Security
+
+    if (password.length < 12 && symbols.hasMatch(password)) {
+      emitter(state.copyWith(passwordSecurity: 'Medium'));
+      return;
+    }
+
+    if (password.length >= 12 && !symbols.hasMatch(password)) {
+      emitter(state.copyWith(passwordSecurity: 'Medium'));
+      return;
+    }
+
+    emitter(state.copyWith(passwordSecurity: 'Strong'));
 
     if (!DB.checkPassword(email, password)) {
       emitter(state.copyWith(passwordError: 'Wrong Password'));

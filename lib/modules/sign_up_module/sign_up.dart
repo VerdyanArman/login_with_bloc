@@ -42,6 +42,10 @@ class SignUpScreen extends StatelessWidget {
     String? age;
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Create an account'),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -59,8 +63,6 @@ class SignUpScreen extends StatelessWidget {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Create an account'),
-                    const SizedBox(height: 15),
                     CustomTextField(
                       label: 'Email',
                       errorMessage: state.emailError,
